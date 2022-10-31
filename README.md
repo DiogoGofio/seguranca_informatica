@@ -1,7 +1,9 @@
 GITHUB: https://github.com/amagovpt/autenticacao.gov
+
 SDK: https://amagovpt.github.io/docs.autenticacao.gov/manual_sdk.html
 
-Implementar:
+
+<b>Implementar:</b>
 - Criação de um ficheiro com um pedido de licença que inclua a identificação do utilizador, dados sobre a plataforma para a execução da aplicação e dados sobre a aplicação
 - Proteção (integridade, confidencialidade, autenticação, não repudiação) do pedido de licença
 - Validação do pedido de licença
