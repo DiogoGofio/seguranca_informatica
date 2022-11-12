@@ -1,15 +1,15 @@
 package pteidsample;
-import pt.gov.cartaodecidadao.*;
+//import pt.gov.cartaodecidadao.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -24,13 +24,13 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello world!");
-
+getsysteminfo();
         // Cifras: Algoritmo/MododeCifra/Padding
 
 
     }
 
-
+/*
     public static void readIDCard() {
         try {
             PTEID_ReaderSet.initSDK();
@@ -58,7 +58,7 @@ public class Main {
             System.err.println("Native code library failed to load. \n" + e);
             System.exit(1);
         }
-    }
+    }*/
     public static void generateKey() throws NoSuchAlgorithmException {
         String keyFname = null;
         String cipherAlgorit = null;
@@ -113,4 +113,45 @@ public class Main {
         // Ler ficheiro (em bytes)
         FileInputStream textToDecipher = new FileInputStream("./test/"+decipherFname);
     }
+    public static void getsysteminfo(){
+        Map<String, String> map = System.getenv();
+        map.entrySet().forEach(System.out::println);
+    /*    System.out.println(System.getenv("PROCESSOR_IDENTIFIER"));
+        System.out.println(System.getenv("PROCESSOR_ARCHITECTURE"));
+        System.out.println(System.getenv("NUMBER_OF_PROCESSORS"));
+*/
+
+    }
+
+    private String encodeFileToBase64Binary(File file)
+            throws IOException {
+
+        byte[] bytes = loadFile(file);
+        byte[] encoded = Base64.getEncoder().encode(bytes);
+        String encodedString = new String(encoded);
+
+        return encodedString;
+    }
+
+    private byte[] loadFile(File file) throws IOException {
+        byte[] bytes;
+        try (InputStream is = new FileInputStream(file)) {
+            long length = file.length();
+            if (length > Integer.MAX_VALUE) {
+                throw new IOException("File to large " + file.getName());
+            }
+            bytes = new byte[(int) length];
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length
+                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+            if (offset < bytes.length) {
+                throw new IOException("Could not completely read file " + file.getName());
+            }
+        }
+        return bytes;
+    }
+
 }
