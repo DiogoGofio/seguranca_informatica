@@ -30,6 +30,8 @@ getsysteminfo();
 
     }
 
+
+
 /*
     public static void readIDCard() {
         try {
